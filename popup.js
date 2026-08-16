@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="rp-channel">${escapeHtml(video.channel || '')}</div>
                 <div class="rp-time-row">
                     ${isComplete
-                        ? `<span class="rp-complete-badge">Completed</span>`
+                        ? `<span class="rp-complete-badge">✓ Completed</span>`
                         : `<span class="rp-time">${timeStr}</span>`
                     }
                     <span class="rp-duration">${durStr}</span>
@@ -547,10 +547,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="rp-right-col">
                 <span class="rp-watch-count" title="Times played">${wCount}×</span>
-                <button class="rp-delete-btn" data-id="${watchId}" title="Remove">Remove</button>
+                <button class="rp-delete-btn" data-id="${watchId}" title="Remove from history">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path d="M3 4.5h10M5.5 4.5v8a1 1 0 001 1h3a1 1 0 001-1v-8M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M6.5 7v4M9.5 7v4"/></svg>
+                </button>
             </div>
             <div class="rp-progress-wrap">
-                <div class="rp-progress-bar" style="width:${(progress * 100).toFixed(1)}%;${isComplete ? 'background:#4caf50;' : ''}"></div>
+                <div class="rp-progress-bar" style="width:${(progress * 100).toFixed(1)}%;${isComplete ? 'background:linear-gradient(90deg,#10b981,#34d399);' : ''}"></div>
             </div>`;
 
         // Delete button
