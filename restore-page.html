@@ -1,113 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>YT Pro+ · Restore Backup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Pro+ · Restore Backup</title>
   <style>
+    :root {
+      --bg: #07080e;
+      --card-bg: rgba(16, 20, 36, 0.78);
+      --border: rgba(255, 255, 255, 0.09);
+      --border-hover: rgba(99, 102, 241, 0.45);
+      --accent: #6366f1;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --text: #f8fafc;
+      --text-sub: rgba(241, 245, 249, 0.7);
+      --text-muted: rgba(148, 163, 184, 0.5);
+      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #e0e0e0;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(1200px 600px at 20% 0%, rgba(99, 102, 241, 0.22), transparent 60%),
+        radial-gradient(1000px 500px at 80% 100%, rgba(6, 182, 212, 0.16), transparent 55%),
+        radial-gradient(800px 400px at 50% 50%, rgba(139, 92, 246, 0.08), transparent 70%);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
     }
+
     .card {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 40px 48px;
-      max-width: 480px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 44px 48px;
+      max-width: 520px;
       width: 100%;
       text-align: center;
+      backdrop-filter: blur(28px) saturate(180%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: cardIn 0.5s var(--ease-spring);
+      position: relative;
+      overflow: hidden;
     }
-    .logo { font-size: 40px; margin-bottom: 12px; }
-    h1 { font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 8px; }
-    p  { font-size: 14px; color: #888; line-height: 1.6; margin-bottom: 28px; }
-    code { background: #2a2a2a; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .logo-badge {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.45);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.35);
+    }
+    .logo-badge svg { width: 32px; height: 32px; color: #818cf8; }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      font-size: 13.5px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #a5f3fc;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
 
     #drop-zone {
-      border: 2px dashed #444;
-      border-radius: 12px;
+      border: 2px dashed rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
       padding: 36px 20px;
-      transition: border-color 0.2s, background 0.2s;
+      transition: all 0.25s var(--ease-spring);
       margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
     }
     #drop-zone:hover, #drop-zone.drag-over {
-      border-color: #00d2ff;
-      background: rgba(0,210,255,0.05);
+      border-color: #22d3ee;
+      background: rgba(6, 182, 212, 0.08);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+      transform: scale(1.01);
     }
     #drop-zone label {
       display: block;
       cursor: pointer;
     }
-    .dz-icon { font-size: 32px; margin-bottom: 10px; }
-    .dz-text { font-size: 14px; color: #aaa; }
-    .dz-sub  { font-size: 12px; color: #555; margin-top: 6px; }
+    .dz-icon {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+    }
+    .dz-icon svg {
+      width: 40px;
+      height: 40px;
+      color: rgba(255, 255, 255, 0.4);
+      transition: all 0.25s;
+    }
+    #drop-zone:hover .dz-icon svg {
+      color: #22d3ee;
+      transform: translateY(-2px);
+    }
+    .dz-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .dz-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: rgba(0,210,255,0.12);
-      border: 1px solid rgba(0,210,255,0.3);
-      color: #00d2ff;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 14px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(6, 182, 212, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.45);
+      color: #c7d2fe;
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-size: 13.5px;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: all 0.22s var(--ease-spring);
     }
-    .btn:hover { background: rgba(0,210,255,0.22); }
+    .btn:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(6, 182, 212, 0.25));
+      border-color: rgba(99, 102, 241, 0.7);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+      transform: translateY(-1.5px);
+    }
 
     .progress-bar {
-      height: 4px;
-      background: #222;
-      border-radius: 4px;
-      margin-top: 20px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 99px;
+      margin-top: 24px;
       overflow: hidden;
       display: none;
     }
     .progress-bar.show { display: block; }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #00d2ff, #00ff88);
-      border-radius: 4px;
+      background: linear-gradient(90deg, #6366f1, #06b6d4, #10b981);
+      border-radius: 99px;
       width: 0%;
       transition: width 0.4s ease;
     }
 
-    #status { margin-top: 16px; font-size: 14px; min-height: 20px; }
-    #status.success { color: #00ff88; }
-    #status.error   { color: #ff4444; }
-    #status.info    { color: #aaa; }
+    #status {
+      margin-top: 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      min-height: 20px;
+    }
+    #status.success { color: var(--emerald); }
+    #status.error   { color: var(--rose); }
+    #status.info    { color: var(--text-sub); }
 
-    .close-hint { font-size: 12px; color: #555; margin-top: 14px; display: none; }
+    .close-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 14px;
+      display: none;
+    }
     .close-hint.show { display: block; }
   </style>
 </head>
 <body>
 <div class="card">
-  <div class="logo"><svg viewBox="0 0 40 40" fill="none" stroke="#00d2ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40"><rect x="6" y="14" width="28" height="22" rx="2"/><path d="M6 20 H34"/><path d="M13 8 L6 14"/><path d="M27 8 L34 14"/><path d="M13 8 H27"/><path d="M16 27 L20 31 L24 27"/><line x1="20" y1="22" x2="20" y2="31"/></svg></div>
-  <h1>Restore YT Pro+ Backup</h1>
-  <p>Select your <code>ytpro-backup-*.json</code> file to restore your watch history and play counts.</p>
+  <div class="logo-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+  </div>
+  <h1>Restore Watch History</h1>
+  <p>Select your <code>ytpro-backup-*.json</code> file to restore your watch history, play counts, and settings.</p>
 
   <input type="file" id="file-input" accept=".json"
     style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;">
 
   <div id="drop-zone">
     <label for="file-input">
-      <div class="dz-icon"><svg viewBox="0 0 32 32" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32"><path d="M4 10 C4 8.9 4.9 8 6 8 L13 8 L15 11 L26 11 C27.1 11 28 11.9 28 13 L28 24 C28 25.1 27.1 26 26 26 L6 26 C4.9 26 4 25.1 4 24 Z"/></svg></div>
+      <div class="dz-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+      </div>
       <div class="dz-text">Click to choose file</div>
       <div class="dz-sub">or drag &amp; drop your backup JSON here</div>
     </label>
   </div>
 
-  <label for="file-input" class="btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M2 5 C2 4.4 2.4 4 3 4 L6.5 4 L7.5 5.5 L13 5.5 C13.6 5.5 14 5.9 14 6.5 L14 12 C14 12.6 13.6 13 13 13 L3 13 C2.4 13 2 12.6 2 12 Z"/></svg> Browse for backup file</label>
+  <label for="file-input" class="btn">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M2 5 C2 4.4 2.4 4 3 4 L6.5 4 L7.5 5.5 L13 5.5 C13.6 5.5 14 5.9 14 6.5 L14 12 C14 12.6 13.6 13 13 13 L3 13 C2.4 13 2 12.6 2 12 Z"/></svg>
+    Browse for backup file
+  </label>
 
   <div class="progress-bar" id="progress-bar">
     <div class="progress-fill" id="progress-fill"></div>
